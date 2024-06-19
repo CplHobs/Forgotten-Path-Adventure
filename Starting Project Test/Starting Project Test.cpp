@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello World!" << endl;
+    cout << "Updated this code to test my understanding of how GitHub works" << endl;
 
     return 0;
 }
