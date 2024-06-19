@@ -1,0 +1,7 @@
+Ideas
+List for the team to add any ideas we have for the project. This could also work like a possible
+to do list. One of the example projects had this I thought it was a great idea.
+
+- Last meeting it was mentioned we could include the mini game at the end of the path. I think
+  this could be plan B if we are not able to implement the mini games along the way or if we 
+  run out of time it sounds like it would be easier to implement
