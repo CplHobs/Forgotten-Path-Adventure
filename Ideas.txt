@@ -5,3 +5,6 @@ to do list. One of the example projects had this I thought it was a great idea.
 - Last meeting it was mentioned we could include the mini game at the end of the path. I think
   this could be plan B if we are not able to implement the mini games along the way or if we 
   run out of time it sounds like it would be easier to implement
+- Thinking about how we can divide up the coding side of this. Possibly we pick 3 places in the UAA Library and 3 entrances to start from. I will look for a map of the building so we can more easily get directions working on this outside of the building: https://consortiumlibrary.org/about/location/library_map.php
+- Current starting locations: Main Entrance (closest to main road), North Entrance, Social Sciences Building North Entrance
+- Current possible ending locations: Kaladies Cafe, Group Study Rooms, Learning Commons, North Library Instruction Room
