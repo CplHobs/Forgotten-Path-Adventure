@@ -39,14 +39,14 @@ int main()
             // call function for path to Learning Commons
             pathToLearningCommons();
             break;
-        default:
+        default:{
             // set this to the exit code in case the user enters a random input that way it terminates the code:
             cout << "You have entered a value outside of 1-3.\n"
                 << "Please enter a new destination using number 1-3.\n";
         }
         }
     }
-}
+
 
 // here is where we will define our functions 
 void pathToArchives() {
@@ -147,7 +147,7 @@ void pathToLearningCommons() {
 
 }
 
-      int getUserIntInput(int min, int max) {
+int getUserIntInput(int min, int max) {
     // takes in the min value from the menu options and the max value. 
     // Insures user enters a valid value to select the option from the menu.
     // Returns a valid user int value for the menu. 
@@ -163,4 +163,5 @@ void pathToLearningCommons() {
             cout << "You have entered a value outside of " << min << " and " << max << endl
                 << "Please try again." << endl;
         }
-      
+    }
+}
