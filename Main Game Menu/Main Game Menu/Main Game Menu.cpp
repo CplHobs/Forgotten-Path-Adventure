@@ -4,15 +4,18 @@
 
 using namespace std;
 
-// here is where we declare our functions: 
-void testFunction();
+// here is where we declare our functions for the paths: 
+void pathToArchives();
 void pathToLearningCommons();
 
+// Functions to be used in our paths
+int getUserIntInput(int min, int max);
 
 int main()
 {
     int user_choice = 0;
     // Basic intro text
+  
     cout << "Welcome to the Consortium Library!" << endl;
     cout << "Where would you like to go?" << endl;
 
@@ -27,6 +30,7 @@ int main()
     switch (user_choice) {
         case 1:
             // call function for path to Archives
+            pathToArchives();
             break;
         case 2:
             // call function for path to Science Building
@@ -40,12 +44,40 @@ int main()
             cout << "You have entered a value outside of 1-3.\n"
                 << "Please enter a new destination using number 1-3.\n";
         }
-
-    return 0;
+        }
+    }
 }
 
+// here is where we will define our functions 
+void pathToArchives() {
+    int user_choice = 0;
 
+    cout << "You Selected the Archives and Special Collections path." << endl
+        << "Menu:" << endl
+        << "1: Proceed to the right and past the main desk" << endl
+        << "2: " << endl
+        << "3: " << endl;
+    user_choice = getUserIntInput(1, 3);
+    switch (user_choice)
+    {
+    case 1: {
+        cout << "After moving past the main desk you see a large open area with the windows and students to your right: " << endl
+            << "Menu: " << endl
+            << "1: " << endl
+            << "2: " << endl
+            << "3: " << endl;
+        user_choice = getUserIntInput(1, 3);
+    }
+    case 2: {
 
+    }
+    case 3: {
+
+    }default: {
+        cout << "Error in switch value." << endl;
+    }
+    }
+}
 
 void pathToLearningCommons() {
     cout << "You will need to go right moving beyond the front desk.\n"
@@ -114,3 +146,21 @@ void pathToLearningCommons() {
     }
 
 }
+
+      int getUserIntInput(int min, int max) {
+    // takes in the min value from the menu options and the max value. 
+    // Insures user enters a valid value to select the option from the menu.
+    // Returns a valid user int value for the menu. 
+    int user_choice = 0;
+    while (true)
+    {
+        cin >> user_choice;
+        if (user_choice >= min && user_choice <= max) {
+            return user_choice;
+        }
+        else
+        {
+            cout << "You have entered a value outside of " << min << " and " << max << endl
+                << "Please try again." << endl;
+        }
+      
