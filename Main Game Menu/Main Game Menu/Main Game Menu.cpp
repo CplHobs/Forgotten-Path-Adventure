@@ -1,3 +1,8 @@
+// Purpose of this code is to act as the foundation all group members will add to.
+// just using the basic header file, we can add others as needed:
+#include <iostream>
+
+using namespace std;
 
 // here is where we declare our functions: 
 void testFunction();
@@ -8,7 +13,7 @@ int main()
 {
     int user_choice = 0;
     // Basic intro text
-    cout << "Welcome to the Consortium Library" << endl;
+    cout << "Welcome to the Consortium Library!" << endl;
     cout << "Where would you like to go?" << endl;
 
     cout << "MENU:" << endl
@@ -19,37 +24,27 @@ int main()
     cin >> user_choice;
 
     // switch statment to control the user options currenly set to 9 cases with the option to add or remove as needed:
-    switch (user_choice)
-    {
-    case 1: {
-        // call function for path to Archives
-        break;
-    }
-    case 2: {
-        // call function for path to Science Building
-        break;
-    }
-    case 3: {
-        // call function for path to Learning Commons
-        void pathToLearningCommons();
-        break;
-    }
-    default: {
-        // set this to the exit code in case the user enters a random input that way it terminates the code:
-        cout << "You have entered a value outside of 1-3.\n"
-            << "Please enter a new destination using number 1-3.\n";
-        break;
-    }
-    }
-
+    switch (user_choice) {
+        case 1:
+            // call function for path to Archives
+            break;
+        case 2:
+            // call function for path to Science Building
+            break;
+        case 3:
+            // call function for path to Learning Commons
+            pathToLearningCommons();
+            break;
+        default:
+            // set this to the exit code in case the user enters a random input that way it terminates the code:
+            cout << "You have entered a value outside of 1-3.\n"
+                << "Please enter a new destination using number 1-3.\n";
+        }
 
     return 0;
 }
 
-// here is where we will define our functions 
-void testFunction() {
-    // Place holder funtion to be removed
-}
+
 
 
 void pathToLearningCommons() {
@@ -60,7 +55,7 @@ void pathToLearningCommons() {
     int userInput = 0, userTool = 0, numCookies = 0;
     cin >> userInput;
 
-    while (userInput <= 1 || userInput >= 3) {
+    while (userInput < 1 || userInput > 3) {
         cout << "You have enter an invalid input. Pleasse select again\n";
         cin >> userInput;
     }
