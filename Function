@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+
+void chooseDirection() 
+{
+    cout << "Choose your path:" << endl;
+    cout << "1) Left" << endl;
+    cout << "2) Right" << endl;
+    cout << "3) Straight" << endl;
+    cout << "Enter your choice (1, 2, or 3): ";
+}
+
+void navigateCampus()
+{
+    cout << "Welcome to the Consortium Library main entrance!" << endl;
+    cout << "Your task is to solve the challenges hidden throughout the campus." << endl;
+    chooseDirection();
+    int userChoice;
+    cin >> userChoice;
+    cout << " " << endl;
+    string userInput1;
+    int userInput3;
+
+    if (userChoice == 1)
+    {
+        cout << "You've reached the Coffee Shop." << endl;
+        cout << "Solve this riddle: What kind of band never plays music?" << endl;
+        cout << "A) Rock band" << endl;
+        cout << "B) Banjo band" << endl;
+        cout << "C) Rubber band" << endl;
+        cin >> userInput1;
+        if (userInput1 == "C" || userInput1 == "c")
+        {
+            cout << "You got it! You may proceed." << endl;
+            cout << " " << endl;
+            chooseDirection();
+            cin >> userChoice;
+        }
+        else
+        {
+            cout << "Incorrect. You're back at the main entrance." << endl;
+        }
+    }
+    else if (userChoice == 2)
+    {
+        cout << "You've entered the first floor of the Library." << endl;
+        chooseDirection();
+        cin >> userChoice;
+    }
+    else if (userChoice == 3)
+    {
+        cout << "You've reached Career Services." << endl;
+        cout << "Solve this math equation: 2 * 3 + 5 = ?" << endl;
+        cin >> userInput3;
+        if (userInput3 == 11)
+        {
+            cout << "You got it! You may proceed." << endl;
+            cout << " " << endl;
+            chooseDirection();
+            cin >> userChoice;
+        }
+        else
+        {
+            cout << "Incorrect. You're back at the main entrance." << endl;
+        }
+    }
+    else
+    {
+        cout << "Invalid entry." << endl;
+        cout << " " << endl;
+        chooseDirection();
+        cin >> userChoice;
+    }
+}
+
+int main()
+{
+    navigateCampus();
+    return 0;
+}
