@@ -1,0 +1,136 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+string chooseDirection()
+{
+    cout << "Which direction would you like to go? (left/right/forward): ";
+    string userChoice;
+    cin >> userChoice;
+    return userChoice;
+}
+void pathToPsychology()
+{
+    string locations[] = {
+        "You are at the Library's main entrance",
+        "You are at the Alumni Center",
+        "You are at the Kaladi Brothers Cafe.",
+        "You are in the restroom. \n(Remember to wash your hands!)",
+        "You are on the stairs. \n(Watch your step!)",
+        "You are by the Lecture Hall. \n(Shh!)",
+        "You are at the Parking Garage",
+        "You hit a wall. \n(Ouch!)",
+        "You stubbed your toe on a chair. \n(Ouch!)",
+        "You are in the Computer Lab",
+        "You are looking at the vending machines. \n(Grab a snack!)"
+    };
+    int currentLocation = 0;
+    int moves = 0;
+    while (currentLocation != 11)
+    {
+        cout << locations[currentLocation] << "\n";
+        string chosenDirection = chooseDirection();
+        if (currentLocation == 1)
+        {
+            cout << "\n***There seems to be a trivia game happening!***\n";
+            cout << "What kind of fish is Marlin from the movie, Finding Nemo?" << endl;
+            cout << "A) Rock fish" << endl;
+            cout << "B) Gold fish" << endl;
+            cout << "C) Clown fish" << endl;
+            string answer;
+            cin >> answer;
+
+            if (answer == "C" || answer == "c")
+            {
+                cout << "Correct!" << endl;
+                cout << " " << endl;
+            }
+            else
+            {
+                cout << "Incorrect, Marlin was a clown fish!" << endl;
+                cout << " " << endl;
+            }
+        }
+        else if (currentLocation == 2)
+        {
+            cout << "\n***Which drink would you like to get?***\n";
+            cout << "frapuccino" << endl;
+            cout << "latte" << endl;
+            cout << "juice" << endl;
+            string answer;
+            cin >> answer;
+            cout << "Good choice, enjoy!\n" << endl;
+        }
+        else if (currentLocation == 9)
+        {
+            cout << "\n***There appears to be a trivia game happening!\n";
+            cout << "What is Scotland's national animal?" << endl;
+            cout << "A) Horse" << endl;
+            cout << "B) Lion" << endl;
+            cout << "C) Unicorn" << endl;
+            string answer;
+            cin >> answer;
+
+            if (answer == "C" || answer == "c")
+            {
+                cout << "Correct!" << endl;
+                cout << " " << endl;
+            }
+            else
+            {
+                cout << "Incorrect, its the unicorn!" << endl;
+                cout << " " << endl;
+            }
+        }
+        else if (currentLocation == 10)
+        {
+            cout << "\n***Which snack would you like to get?***\n";
+            cout << "chips" << endl;
+            cout << "cookies" << endl;
+            cout << "candy" << endl;
+            string answer;
+            cin >> answer;
+            cout << "Good choice, enjoy!\n" << endl;
+        }
+        if (chosenDirection == "left")
+        {
+            currentLocation = (currentLocation + 5) % 12;
+        }
+        else if (chosenDirection == "right")
+        {
+            currentLocation = (currentLocation + 1) % 12;
+        }
+        else if (chosenDirection == "forward")
+        {
+            currentLocation = (currentLocation + 2) % 12;
+        }
+        else
+        {
+            cout << "Invalid direction. Try again.\n";
+        }
+        if (moves >= 7 && currentLocation != 11)
+        {
+            cout << "Uh-oh, you are lost! Would you like to try again? (yes/no): ";
+            string tryAgain;
+            cin >> tryAgain;
+            if (tryAgain == "no")
+            {
+                break;
+            }
+            else
+            {
+                moves = 0;
+                currentLocation = 0;
+            }
+        }
+    }
+    if (currentLocation == 11)
+    {
+        cout << "\nYou've arrived at the Psychology Department. Well done!\n";
+    }
+}
+int main()
+{
+    pathToPsychology();
+    return 0;
+}
