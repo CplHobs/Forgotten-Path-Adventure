@@ -8,6 +8,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <random>
+#include <chrono>
+#include <thread>
+#include <conio.h>
 
 using namespace std;
 
@@ -34,7 +37,7 @@ void pathLeft(int, ArchivesPathNodes side[8]);
 void pathCenter(int, ArchivesPathNodes main[4]);
 void pathRight(int, ArchivesPathNodes side[8]);
 void playMiniGame(ArchivesPathNodes);
-void playPendulumGame(); // when player interacts with pendulum run a timing game
+int playPendulumGame(); // when player interacts with pendulum run a timing game
 void labGame(); // creates an image if player goes to the computer lab
 
 int main()
@@ -162,7 +165,7 @@ void pathToLearningCommons() {
     if (userChoiceStop1 == 3) {
         cout << "You check around the area for a snack\n"
             << "There looks to be something shiny in the bookshelf\n"
-            << "You gain one cookie\n";
+            << "You gain one cookie. Then walk towards the open area nearby.\n";
         numCookies++;
         userChoiceStop1 = 0;
 
@@ -185,14 +188,22 @@ void pathToLearningCommons() {
         break;
     case 2:
         cout << "Here you see the pendulum has stopped swinging. Push the pendulum to resume its normal path.\n";
+        cout << "Note: Tapping keys in quick succession will cause the program to check each tap of the key.\n"
+            << "This can take a while to resolve so it is not recommended. "
+            << "Click Enter to continue.\n";
+        cin.get();
         // add function to play pendulum game
+        playPendulumGame();
+        numCookies++;
         break;
     case 3:
         cout << "You go over to the computer lab. It seems to have many computers available to students.\n"
             << "There is a cascade of clicking noises behind you.\n"
             << "You turn around just in time to see a colossal centipede.\n";
-        // add function to play mini game including the centipede
-        void labGame();
+        // add function to play mini game including the centipede if there is time...
+        cout << "The creature chases you until something falls from your pocket.\n"
+            << "It stops to eat whatever fell.\n";
+            numCookies--;
         break;
     default: {
         // set this to the exit code in case the user enters a random input that way it terminates the code:
@@ -202,15 +213,36 @@ void pathToLearningCommons() {
     }
 
     // present options as they arrive at the "crossroads"
-    cout << "The next place your exploration is an intersection.\n"
+    cout << "The next location of your your exploration is an intersection.\n"
     << "1. Go left in the direction of food.\n"
         << "2. Continue East in search of the Learning Commons.\n"
         << "3. Explore the video section of the libary towards the right.\n";
+    cin >> userChoiceStop3;
+
+    switch (userChoiceStop3) {
+    case 1:
+        cout << "You find a cookie under the table there.\n"
+            << "Recalling your end goal you head out of the break area.\n"
+            << "Going towards the elevators you spot the Learning Commons on your left\n";
+        numCookies++;
+        break;
+    case 2: 
+        break;
+    case 3:
+        cout << "Here you find a small gnome perusing the films.\n"
+            << "He turns to you and says \'They will never believe you.\'\n"
+            << "The gnome snatches anything he can reach and is gone in a flash.\n";
+        numCookies--;
+        break;
+    }
 
     if (userChoiceStop3 == 2) {
-        cout << "You press on to the Learning Commons. In a few seconds you arrive\n"
+        cout << "You press on to the Learning Commons. In a few seconds you arrive... \n"
             << "exactly where you need to be.\n";
     }
+    cout << "You found " << numCookies << "cookies on your adventure. "
+        << "Next time will you collect even more?\n\n"
+        << "*** Thanks for playing! ***\n";
 
 }
 
@@ -357,4 +389,45 @@ void playMiniGame(ArchivesPathNodes path) {
     }
     }
 
+}
+
+int playPendulumGame() {
+    srand(time(0)); // seed random number generator
+
+    bool gameOver = false;
+
+
+    while (!gameOver) {
+        int timeToPress = rand() % 3 + 1; // generate a random time to press the key (1-3 seconds)
+        cout << "Get ready to press a key...\n";
+        this_thread::sleep_for(chrono::seconds(timeToPress)); // wait for the random time
+        cout << "PRESS A KEY NOW!\n";
+        fflush(stdout); // make sure the output is displayed immediately
+        auto start = chrono::high_resolution_clock::now(); // start timer
+        _getch(); // wait for a key press
+        fflush(stdin); // clear the input buffer
+        auto end = chrono::high_resolution_clock::now(); // stop timer
+        chrono::duration<double> diff = end - start; // calculate time difference
+        if (diff.count() < 0.5) {
+            cout << "Too quick! You pressed the key in " << diff.count() << " seconds.\n";
+        }
+        else if (diff.count() > 1.5) {
+            cout << "Too late! You pressed the key in " << diff.count() << " seconds.\n";
+        }
+        else {
+            cout << "Perfect! You pressed the key in " << diff.count() << " seconds.\n";
+            gameOver = true;
+        }
+        if (!gameOver) {
+            cout << "Press any key to play again...\n";
+            _getch(); // wait for a key press
+            fflush(stdin); // clear the input buffer
+        }
+    }
+
+    cout << "Congratulations, you won a cookie! Press any key to continue...\n";
+    _getch(); // wait for a key press
+    fflush(stdin); // clear the input buffer
+
+    return 0;
 }
