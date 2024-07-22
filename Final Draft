@@ -150,24 +150,13 @@ void pathToPsychology()
         }
         else if (currentLocation == 9)
         {
-            cout << "\n***There appears to be a trivia game happening!\n";
-            cout << "What is Scotland's national animal?" << endl;
-            cout << "A) Horse" << endl;
-            cout << "B) Lion" << endl;
-            cout << "C) Unicorn" << endl;
+            cout << "\n***There seems to be a study session here. What class are you needing assistance with?***\n";
+            cout << "Computer Hardware" << endl;
+            cout << "Calculus" << endl;
+            cout << "None" << endl;
             string answer;
             cin >> answer;
-
-            if (answer == "C" || answer == "c")
-            {
-                cout << "Correct!" << endl;
-                cout << " " << endl;
-            }
-            else
-            {
-                cout << "Incorrect, its the unicorn!" << endl;
-                cout << " " << endl;
-            }
+            cout << "It's here whenever you need it. Stop by anytime!\n" << endl;
         }
         else if (currentLocation == 10)
         {
