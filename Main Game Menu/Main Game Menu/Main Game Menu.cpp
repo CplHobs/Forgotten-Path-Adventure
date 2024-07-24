@@ -1,10 +1,17 @@
 // Purpose of this code is to act as the foundation all group members will add to.
 // just using the basic header file, we can add others as needed:
 
+
 #include <iostream>
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
+#include <iomanip>
+#include <random>
+#include <chrono>
+#include <thread>
+#include <conio.h>
 #include <vector>
 
 using namespace std;
@@ -37,6 +44,8 @@ void playgame3();
 void playgame4();
 void playgame5();
 void playgame6();
+int playPendulumGame(); // when player interacts with pendulum run a timing game
+void labCreature(); // creates an image if player goes to the computer lab
 
 int main()
 {
@@ -81,6 +90,7 @@ void pathToArchives() {
     
 
     ArchivesPathNodes main_path[4] = {
+   
         ArchivesPathNodes("Long hallway", "Just pased the main desk leading to a large open area.", ((rand() % 6) + 1)),
         ArchivesPathNodes("Open Area in the Middle", "A large open area in the middle of the library with windows to your left and students sitting at desks.", ((rand() % 6) + 1)),
         ArchivesPathNodes("Pendulum Stairs", "A staircase that leads to the second and third floors.", ((rand() % 6) + 1)),
@@ -111,21 +121,48 @@ void pathToLearningCommons() {
         << "1. Go beyond the front desk\n"
         << "2. Investigate the vending machine\n"
         << "3. Search the area for a cookie\n";
-    int userInput = 0, userTool = 0, numCookies = 0;
-    cin >> userInput;
 
-    while (userInput < 1 || userInput > 3) {
+    int userChoiceStop1 = 0, reactionToDog = 0, userChoiceStop2 = 0, userChoiceStop3 = 0, userTool = 0, numCookies = 0;
+    string dogLocation = "noWhere";
+    cin >> userChoiceStop1;
+
+    while (userChoiceStop1 < 1 || userChoiceStop1 > 3) {
         cout << "You have enter an invalid input. Pleasse select again\n";
-        cin >> userInput;
+        cin >> userChoiceStop1;
     }
     // take the user through their first set of options on their path
-    if (userInput == 1) {
+    if (userChoiceStop1 == 1) {
         cout << "You begin your journey to the learning commons.\n";
         cout << "A small dog approaches. What would you like to do?\n";
-        userInput = 0;
+        userChoiceStop1 = 0;
+        cout << "1. Pet the dog\n"
+            << "2. Give the dog one a cookie\n"
+            << "3. Run from the dog\n";
+        cin >> reactionToDog;
+        // new options if user meets dog
+        switch (reactionToDog) {
+        case 1:
+            cout << "The dogs lets you pet them and then runs to the computer lab ahead.\n";
+            break;
+        case 2:
+            cout << "The dog takes the cookie greatfully. You blink and the dog disappears. In its place you find two more cookies.\n";
+            numCookies++;
+            break;
+        case 3:
+            cout << "You run like the wind away from the dog. In your panic you hit a wall head on and fall unconscious.\n";
+            // add function to play mini game of some kind (hangman maybe)
+            break;
+        default: {
+            // set this to the exit code in case the user enters a random input that way it terminates the code:
+            cout << "You have entered a value outside of 1-3.\n"
+                << "Please enter a new destination using numbers 1-3.\n";
+        }
+        }
+        userChoiceStop1 = 0; // stops the other first branches from runnning on accident.
     }
 
-    if (userInput == 2) {
+    if (userChoiceStop1 == 2) { // set userTool to one of the numbers selected by the player
+
         cout << "You walk up to the vending machine just beyond the entrance.\n"
             << "Inside you see many possible tools for the journey.\n"
             << "Select which item you would like to gain:\n"
@@ -133,44 +170,106 @@ void pathToLearningCommons() {
             << "2: Pencil of Piercing\n"
             << "3: Ballistic Eraser\n";
         // add variable to indicate the user has one of these tools
-        userInput = 0;
+        userChoiceStop1 = 0;
 
     }
 
-    if (userInput == 3) {
+    if (userChoiceStop1 == 3) {
         cout << "You check around the area for a snack\n"
             << "There looks to be something shiny in the bookshelf\n"
-            << "You gain one cookie\n";
+            << "You gain one cookie. Then walk towards the open area nearby.\n";
         numCookies++;
-        userInput = 0;
+        userChoiceStop1 = 0;
 
     }
     cout << "";
 
     cout << "You arrive at the second main desk. From here you can ask the staff if you\n"
-        << "have any questions. Beyond the desk likely on your spiraling staircase and \n"
-        << "a tall pendulum.To your left there will be the computer lab."
+        << "have any questions. On your right is a spiraling staircase and \n"
+        << "a tall pendulum.To your left there will be the computer lab.\n"
         << "1. To move East towards the Learning Commons.\n"
         << "2. Go investigate the pendulum.\n"
         << "3. Explore the computer lab.\n";
+    cin >> userChoiceStop2;
 
     // add events that trigger if the player goes to 2 or 3
 
-    if (userInput == 1) {
+    switch (userChoiceStop2) {
+    case 1:
         cout << "You continue on the straight path resolute to find its end.\n";
-        userInput = 0;
+        break;
+    case 2:
+        cout << "Here you see the pendulum has stopped swinging. Push the pendulum to resume its normal path.\n";
+        cout << "Note: Tapping keys in quick succession will cause the program to check each tap of the key.\n"
+            << "This can take a while to resolve so it is not recommended. "
+            << "Click Enter to continue.\n";
+        cin.get();
+        // add function to play pendulum game
+        playPendulumGame();
+        numCookies++;
+        cout << " You head back the way you came and make a right at the second information desk.\n";
+        break;
+    case 3:
+        cout << "You go over to the computer lab. It seems to have many computers available to students.\n"
+            << "There is a cascade of clicking noises behind you.\n"
+            << "You turn around just in time to see a colossal centipede.\n";
+        // add function to play mini game including the centipede if there is time...
+        cout << "The creature chases you until something falls from your pocket.\n"
+            << "It stops to eat whatever fell.\n";
+        labCreature(); // makes an image for the computer lab event
+            numCookies--;
+            cout << "As you leave the computer lab go left passing the second information desk.\n";
+        break;
+    default: {
+        // set this to the exit code in case the user enters a random input that way it terminates the code:
+        cout << "You have entered a value outside of 1-3.\n"
+            << "Please enter a new destination using numbers 1-3.\n";
+    }
     }
 
     // present options as they arrive at the "crossroads"
-    cout << "The next place your exploration is an intersection.\n"
+    cout << "The next location of your your exploration is an intersection.\n"
     << "1. Go left in the direction of food.\n"
         << "2. Continue East in search of the Learning Commons.\n"
         << "3. Explore the video section of the libary towards the right.\n";
+    cin >> userChoiceStop3;
 
-    if (userInput == 2) {
-        cout << "You press on to the Learning Commons. In a few seconds you arrive\n"
+    switch (userChoiceStop3) {
+    case 1:
+        cout << "You find a cookie under the table there.\n"
+            << "Recalling your end goal you head out of the break area and go right.\n"
+            << "Before you reach the video library you spot the Learning Commons on your left\n";
+        numCookies++;
+        break;
+    case 2: 
+        break;
+    case 3:
+        cout << "Here you find a small gnome perusing the films.\n"
+            << "He turns to you and says \'They will never believe you.\'\n"
+            << "The gnome snatches anything he can reach and is gone in a flash.\n"
+            << "You back the way you came to the intersection and go right.\n";
+        numCookies--;
+        break;
+    }
+
+    if (userChoiceStop3 == 2) {
+        cout << "You press on to the Learning Commons. In a few seconds you arrive... \n"
             << "exactly where you need to be.\n";
     }
+    cout << "You found " << numCookies << " cookies on your adventure. "
+        << "Next time will you collect even more?\n\n"
+        << "*** Thanks for playing! ***\n";
+
+}
+
+void labCreature() {
+
+    cout << "                            .    .\n"
+        << "                             )  (\n"
+        << "       _ _ _ _ _ _ _ _ _ _ _(.--.)\n"
+        << "     {{ { { { { { { { { { { ( '_')\n"
+        << "      >>>>>>>>>>>>>>>>>>>>>>>`--'>\n";
+    return;
 
 }
 
@@ -202,12 +301,13 @@ void pathMenu() {
          << "3: Right" << endl;
 }
 
-void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes left[4],ArchivesPathNodes right[4]) {
+
     // Main control function for Archives path.
     // Takes in 2 arrays of ArchivesPathNodes data types, mainpath is set to 4 and sidepaths set to 8.
     // Has 4 int variables 1 for user menu selection input, and 3 to control what element in the above arrays to access depending on user choice between left, forward or, right.
     
     int user_choice = 0;
+
     int left_path = 0, center_path = 0 , right_path=0;
     while (center_path < 4)
     {
@@ -216,6 +316,7 @@ void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes left[4],Archive
         switch (user_choice)
         {
         case 1: {
+
             pathLeft(left_path, left);
             cout << "After finishing the game you go back and take the center path.\nNow you go to " << mainpath[center_path].location << endl;
             break;
@@ -362,8 +463,10 @@ void playgame3() {
     int correctAnswer = num1 * num2;
     int playerAnswer;
 
-    cout << "Solve the math problem: " << num1 << " * " << num2 << " = ";
-    cin >> playerAnswer;
+    cout << "Congratulations, you won a cookie! Press any key to continue...\n";
+    _getch(); // wait for a key press
+    fflush(stdin); // clear the input buffer
+
 
     if (playerAnswer == correctAnswer) {
         cout << "Correct! You solved the math problem." << endl;
@@ -372,6 +475,7 @@ void playgame3() {
         cout << "Incorrect. The correct answer was: " << correctAnswer << endl;
     }
 }
+
 void playgame4() {
     string grid[5] = {
         "ABCDE",
