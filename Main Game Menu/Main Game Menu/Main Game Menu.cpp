@@ -38,7 +38,7 @@ void pathCenter(int, ArchivesPathNodes main[4]);
 void pathRight(int, ArchivesPathNodes side[8]);
 void playMiniGame(ArchivesPathNodes);
 int playPendulumGame(); // when player interacts with pendulum run a timing game
-void labGame(); // creates an image if player goes to the computer lab
+void labCreature(); // creates an image if player goes to the computer lab
 
 int main()
 {
@@ -195,6 +195,7 @@ void pathToLearningCommons() {
         // add function to play pendulum game
         playPendulumGame();
         numCookies++;
+        cout << " You head back the way you came and make a right at the second information desk.\n";
         break;
     case 3:
         cout << "You go over to the computer lab. It seems to have many computers available to students.\n"
@@ -203,7 +204,9 @@ void pathToLearningCommons() {
         // add function to play mini game including the centipede if there is time...
         cout << "The creature chases you until something falls from your pocket.\n"
             << "It stops to eat whatever fell.\n";
+        labCreature(); // makes an image for the computer lab event
             numCookies--;
+            cout << "As you leave the computer lab go left passing the second information desk.\n";
         break;
     default: {
         // set this to the exit code in case the user enters a random input that way it terminates the code:
@@ -222,8 +225,8 @@ void pathToLearningCommons() {
     switch (userChoiceStop3) {
     case 1:
         cout << "You find a cookie under the table there.\n"
-            << "Recalling your end goal you head out of the break area.\n"
-            << "Going towards the elevators you spot the Learning Commons on your left\n";
+            << "Recalling your end goal you head out of the break area and go right.\n"
+            << "Before you reach the video library you spot the Learning Commons on your left\n";
         numCookies++;
         break;
     case 2: 
@@ -231,7 +234,8 @@ void pathToLearningCommons() {
     case 3:
         cout << "Here you find a small gnome perusing the films.\n"
             << "He turns to you and says \'They will never believe you.\'\n"
-            << "The gnome snatches anything he can reach and is gone in a flash.\n";
+            << "The gnome snatches anything he can reach and is gone in a flash.\n"
+            << "You back the way you came to the intersection and go right.\n";
         numCookies--;
         break;
     }
@@ -240,15 +244,19 @@ void pathToLearningCommons() {
         cout << "You press on to the Learning Commons. In a few seconds you arrive... \n"
             << "exactly where you need to be.\n";
     }
-    cout << "You found " << numCookies << "cookies on your adventure. "
+    cout << "You found " << numCookies << " cookies on your adventure. "
         << "Next time will you collect even more?\n\n"
         << "*** Thanks for playing! ***\n";
 
 }
 
-void labGame() {
+void labCreature() {
 
-    
+    cout << "                            .    .\n"
+        << "                             )  (\n"
+        << "       _ _ _ _ _ _ _ _ _ _ _(.--.)\n"
+        << "     {{ { { { { { { { { { { ( '_')\n"
+        << "      >>>>>>>>>>>>>>>>>>>>>>>`--'>\n";
     return;
 }
 
@@ -416,6 +424,7 @@ int playPendulumGame() {
         }
         else {
             cout << "Perfect! You pressed the key in " << diff.count() << " seconds.\n";
+            cout << "The pendulum begins to swing as normal. There is a plaque nearby\nif you would like to learn more about the functionality of this pendulum.\n";
             gameOver = true;
         }
         if (!gameOver) {
