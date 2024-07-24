@@ -540,3 +540,45 @@ void playgame6() {
         cout << "Incorrect. The correct word was: " << correctWord << endl;
     }
 }
+
+int playPendulumGame() {
+    srand(time(0)); // seed random number generator
+
+    bool gameOver = false;
+
+
+    while (!gameOver) {
+        int timeToPress = rand() % 3 + 1; // generate a random time to press the key (1-3 seconds)
+        cout << "Get ready to press a key...\n";
+        this_thread::sleep_for(chrono::seconds(timeToPress)); // wait for the random time
+        cout << "PRESS A KEY NOW!\n";
+        fflush(stdout); // make sure the output is displayed immediately
+        auto start = chrono::high_resolution_clock::now(); // start timer
+        _getch(); // wait for a key press
+        fflush(stdin); // clear the input buffer
+        auto end = chrono::high_resolution_clock::now(); // stop timer
+        chrono::duration<double> diff = end - start; // calculate time difference
+        if (diff.count() < 0.5) {
+            cout << "Too quick! You pressed the key in " << diff.count() << " seconds.\n";
+        }
+        else if (diff.count() > 1.5) {
+            cout << "Too late! You pressed the key in " << diff.count() << " seconds.\n";
+        }
+        else {
+            cout << "Perfect! You pressed the key in " << diff.count() << " seconds.\n";
+            cout << "The pendulum resumed its swing as normal. You can look at the plaque next to the stairs for more information on its functionality.\n";
+            gameOver = true;
+        }
+        if (!gameOver) {
+            cout << "Press any key to play again...\n";
+            _getch(); // wait for a key press
+            fflush(stdin); // clear the input buffer
+        }
+    }
+
+    cout << "Congratulations, you won a cookie! Press any key to continue...\n";
+    _getch(); // wait for a key press
+    fflush(stdin); // clear the input buffer
+
+    return 0;
+}
