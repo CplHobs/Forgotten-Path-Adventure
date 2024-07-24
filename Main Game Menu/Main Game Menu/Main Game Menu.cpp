@@ -14,9 +14,8 @@ struct ArchivesPathNodes
     string location;
     string description;
     int minigame_code;
-    bool lastnode;
-    ArchivesPathNodes(string loc, string des, int minigame, bool last)
-        : location(loc), description(des), minigame_code(minigame), lastnode(last) {};
+    ArchivesPathNodes(string loc, string des, int minigame)
+        : location(loc), description(des), minigame_code(minigame) {};
 };
 
 // here is where we declare our functions for the paths: 
@@ -26,10 +25,10 @@ void pathToLearningCommons();
 // Functions to be used in our paths
 int getUserIntInput(int min, int max);
 void pathMenu();
-void pathControl(ArchivesPathNodes main[4], ArchivesPathNodes side[8]);
-void pathLeft(int, ArchivesPathNodes side[8]);
+void pathControl(ArchivesPathNodes main[4], ArchivesPathNodes left[4], ArchivesPathNodes right[4]);
+void pathLeft(int, ArchivesPathNodes left[4]);
 void pathCenter(int, ArchivesPathNodes main[4]);
-void pathRight(int, ArchivesPathNodes side[8]);
+void pathRight(int, ArchivesPathNodes right[4]);
 void playMiniGame(ArchivesPathNodes);
 
 int main()
@@ -80,20 +79,21 @@ void pathToArchives() {
         ArchivesPathNodes("Pendulum Stairs", "A staircase that leads to the second and third floors.", ((rand() % 6) + 1), false),
         ArchivesPathNodes("Archives and Special Collections", "The archives and special collections area of the library you are looking for.", ((rand() % 6) + 1), true),
     };
-    ArchivesPathNodes side_paths[8] = {
-        ArchivesPathNodes("Book Drop", "An area that looks like a spot to return any books you checked out.", ((rand() % 6) + 1), false),                             // 0 left
-        ArchivesPathNodes("Main Desk", "An area to get help from staff members.", ((rand() % 6) + 1), false),                                                         // 1 right
-        ArchivesPathNodes("ARLIS Entrance", "An area called Alaska Resources Library and Information Services.", ((rand() % 6) + 1), false),                          // 2 left
-        ArchivesPathNodes("Study Space", "An area with a lot of desks for students to use for studying.", ((rand() % 6) + 1), false),                                 // 3 right
-        ArchivesPathNodes("Walkway to Testing Center", "A walkway on the second floor that leads to the testing center.", ((rand() % 6) + 1), false),                 // 4 left
-        ArchivesPathNodes("Alaska Medical Library", "An area of the library to find medical information documents.", ((rand() % 6) + 1), false),                      // 5 right
-        ArchivesPathNodes("Instruction and Research", "An area called The instruction and research department of the library.", ((rand() % 6) + 1), false),           // 6 left
-        ArchivesPathNodes("Dean's Office", "The office of the Dean of the Library.", ((rand() % 6) + 1), false),                                                      // 7 right
+    ArchivesPathNodes left_path[4] = {
+        ArchivesPathNodes("Book Drop", "An area that looks like a spot to return any books you checked out.", ((rand() % 6) + 1), false),                             
+        ArchivesPathNodes("ARLIS Entrance", "An area called Alaska Resources Library and Information Services.", ((rand() % 6) + 1), false),                          
+        ArchivesPathNodes("Walkway to Testing Center", "A walkway on the second floor that leads to the testing center.", ((rand() % 6) + 1), false),                 
+        ArchivesPathNodes("Instruction and Research", "An area called The instruction and research department of the library.", ((rand() % 6) + 1), false),                                                              
     };
-    
+    ArchivesPathNodes right_path[4] = {
+        ArchivesPathNodes("Main Desk", "An area to get help from staff members.", ((rand() % 6) + 1), false),
+        ArchivesPathNodes("Study Space", "An area with a lot of desks for students to use for studying.", ((rand() % 6) + 1), false),
+        ArchivesPathNodes("Alaska Medical Library", "An area of the library to find medical information documents.", ((rand() % 6) + 1), false),
+        ArchivesPathNodes("Dean's Office", "The office of the Dean of the Library.", ((rand() % 6) + 1), false),
+    };
 
     cout << "You Selected the Archives and Special Collections path." << endl;
-    pathControl(main_path, side_paths);
+    pathControl(main_path, left_path,right_path);
     
     
 }
@@ -194,13 +194,13 @@ void pathMenu() {
          << "3: Right" << endl;
 }
 
-void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes sidepaths[8]) {
+void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes left[4],ArchivesPathNodes right[4]) {
     // Main control function for Archives path.
     // Takes in 2 arrays of ArchivesPathNodes data types, mainpath is set to 4 and sidepaths set to 8.
     // Has 4 int variables 1 for user menu selection input, and 3 to control what element in the above arrays to access depending on user choice between left, forward or, right.
     
     int user_choice = 0;
-    int left_path = 0, center_path = 0 , right_path=1;
+    int left_path = 0, center_path = 0 , right_path=0;
     while (center_path < 4)
     {
         pathMenu();
@@ -208,7 +208,7 @@ void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes sidepaths[8]) {
         switch (user_choice)
         {
         case 1: {
-            pathLeft(left_path, sidepaths);
+            pathLeft(left_path, left);
             cout << "Now you go to " << mainpath[center_path].location << endl;
             break;
         }
@@ -217,7 +217,7 @@ void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes sidepaths[8]) {
             break;
         }
         case 3: {
-            pathRight(right_path, sidepaths);
+            pathRight(right_path, right);
             cout << "Now you go to " << mainpath[center_path].location << endl;
             break;
         }
@@ -225,18 +225,18 @@ void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes sidepaths[8]) {
             cout << "Error in pathControl function" << endl;
             break;
         }
-        left_path = left_path + 2; // updates by 2 so all even elements are for left path 
+        left_path++;;  
         center_path++;
-        right_path = right_path + 2; // updates by 2 so all odd elements are for right path 
+        right_path++;  
     }
     cout << "Great job in reaching the end of the path." << endl;
 }
 
-void pathLeft(int round,ArchivesPathNodes sidepaths[8]) {
+void pathLeft(int round,ArchivesPathNodes left[4]) {
     // Used when user selects left from pathMenu() function. Takes in 2 arguments int for what round ie element to select in the ArchivesPathNodes array.
     // Will send the current rounds ArchivesPathNodes element to the playMiniGame Function to start the minigame for this node.
     // Outputs the location and discription string for the current node on this path. 
-    ArchivesPathNodes current_node = sidepaths[round];
+    ArchivesPathNodes current_node = left[round];
     
     cout << "You are at " << current_node.location << endl 
          << current_node.description << endl;
@@ -256,11 +256,11 @@ void pathCenter(int round, ArchivesPathNodes mainpath[4]) {
     playMiniGame(current_node);
 }
 
-void pathRight(int round, ArchivesPathNodes sidepaths[8]) {
+void pathRight(int round, ArchivesPathNodes right[4]) {
     // Used when user selects right from pathMenu() function. Takes in 2 arguments int for what round ie element to select in the ArchivesPathNodes array.
     // Will send the current rounds ArchivesPathNodes element to the playMiniGame Function to start the minigame for this node.
     // Outputs the location and discription string for the current node on this path.
-    ArchivesPathNodes current_node = sidepaths[round];
+    ArchivesPathNodes current_node = right[round];
 
     cout << "You are at " << current_node.location << endl
          << current_node.description << endl;
