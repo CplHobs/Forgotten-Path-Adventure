@@ -115,7 +115,6 @@ void pathToArchives() {
     
     
 }
-
 void pathToLearningCommons() {
     cout << "You will need to go right moving beyond the front desk.\n"
         << "1. Go beyond the front desk\n"
@@ -261,7 +260,6 @@ void pathToLearningCommons() {
         << "*** Thanks for playing! ***\n";
 
 }
-
 void labCreature() {
 
     cout << "                            .    .\n"
@@ -272,7 +270,6 @@ void labCreature() {
     return;
 
 }
-
 int getUserIntInput(int min, int max) {
     // takes in the min value from the menu options and the max value. 
     // Insures user enters a valid value to select the option from the menu.
@@ -291,7 +288,6 @@ int getUserIntInput(int min, int max) {
         }
     }
 }
-
 void pathMenu() {
     // Function to display the menu for user to select a path, left, forward, or right.
     cout << "Menu:" << endl
@@ -300,8 +296,7 @@ void pathMenu() {
          << "2: Forward" << endl
          << "3: Right" << endl;
 }
-
-
+void pathControl(ArchivesPathNodes main[4], ArchivesPathNodes left[4], ArchivesPathNodes right[4]){
     // Main control function for Archives path.
     // Takes in 2 arrays of ArchivesPathNodes data types, mainpath is set to 4 and sidepaths set to 8.
     // Has 4 int variables 1 for user menu selection input, and 3 to control what element in the above arrays to access depending on user choice between left, forward or, right.
@@ -318,16 +313,16 @@ void pathMenu() {
         case 1: {
 
             pathLeft(left_path, left);
-            cout << "After finishing the game you go back and take the center path.\nNow you go to " << mainpath[center_path].location << endl;
+            cout << "After finishing the game you go back and take the center path.\nNow you go to " << main[center_path].location << endl;
             break;
         }
         case 2: {
-            pathCenter(center_path, mainpath);
+            pathCenter(center_path, main);
             break;
         }
         case 3: {
             pathRight(right_path, right);
-            cout << "After finishing the game you go back and take the center path.\nNow you go to " << mainpath[center_path].location << endl;
+            cout << "After finishing the game you go back and take the center path.\nNow you go to " << main[center_path].location << endl;
             break;
         }
         default:
@@ -341,7 +336,6 @@ void pathMenu() {
     cout << "Great job in reaching the end of the path." << endl
         << "Hopefully you find what you are looking for." << endl;
 }
-
 void pathLeft(int round,ArchivesPathNodes left[4]) {
     // Used when user selects left from pathMenu() function. Takes in 2 arguments int for what round ie element to select in the ArchivesPathNodes array.
     // Will send the current rounds ArchivesPathNodes element to the playMiniGame Function to start the minigame for this node.
@@ -353,7 +347,6 @@ void pathLeft(int round,ArchivesPathNodes left[4]) {
 
     playMiniGame(current_node);
 }
-
 void pathCenter(int round, ArchivesPathNodes mainpath[4]) {
     // Used when user selects forward from pathMenu() function. Takes in 2 arguments int for what round ie element to select in the ArchivesPathNodes array.
     // Will send the current rounds ArchivesPathNodes element to the playMiniGame Function to start the minigame for this node.
@@ -365,7 +358,6 @@ void pathCenter(int round, ArchivesPathNodes mainpath[4]) {
 
     playMiniGame(current_node);
 }
-
 void pathRight(int round, ArchivesPathNodes right[4]) {
     // Used when user selects right from pathMenu() function. Takes in 2 arguments int for what round ie element to select in the ArchivesPathNodes array.
     // Will send the current rounds ArchivesPathNodes element to the playMiniGame Function to start the minigame for this node.
@@ -377,7 +369,6 @@ void pathRight(int round, ArchivesPathNodes right[4]) {
 
     playMiniGame(current_node);
 }
-
 void playMiniGame(ArchivesPathNodes path) {
     // Plays the minigame based off random number generated between 1 and 6 for the current path node it recieved. ie ArchivesPathNodes path.minigame_code
     int game = path.minigame_code;
@@ -414,7 +405,6 @@ void playMiniGame(ArchivesPathNodes path) {
     }
 
 }
-
 void playgame1() {
     int numberToGuess = (rand() % 10) + 1; // Random number between 1 and 10
     int attempts = 3;
@@ -463,10 +453,8 @@ void playgame3() {
     int correctAnswer = num1 * num2;
     int playerAnswer;
 
-    cout << "Congratulations, you won a cookie! Press any key to continue...\n";
-    _getch(); // wait for a key press
-    fflush(stdin); // clear the input buffer
-
+    cout << "Solve the math problem: " << num1 << " * " << num2 << " = ";
+    cin >> playerAnswer;
 
     if (playerAnswer == correctAnswer) {
         cout << "Correct! You solved the math problem." << endl;
@@ -475,7 +463,6 @@ void playgame3() {
         cout << "Incorrect. The correct answer was: " << correctAnswer << endl;
     }
 }
-
 void playgame4() {
     string grid[5] = {
         "ABCDE",
