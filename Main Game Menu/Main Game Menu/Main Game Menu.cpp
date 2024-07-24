@@ -1,16 +1,18 @@
 // Purpose of this code is to act as the foundation all group members will add to.
 // just using the basic header file, we can add others as needed:
 
-#include <fstream>
-#include <iomanip>
+
 #include <iostream>
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
+#include <iomanip>
 #include <random>
 #include <chrono>
 #include <thread>
 #include <conio.h>
+#include <vector>
 
 using namespace std;
 
@@ -20,9 +22,8 @@ struct ArchivesPathNodes
     string location;
     string description;
     int minigame_code;
-    bool lastnode;
-    ArchivesPathNodes(string loc, string des, int minigame, bool last)
-        : location(loc), description(des), minigame_code(minigame), lastnode(last) {};
+    ArchivesPathNodes(string loc, string des, int minigame)
+        : location(loc), description(des), minigame_code(minigame) {};
 };
 
 // here is where we declare our functions for the paths: 
@@ -32,11 +33,17 @@ void pathToLearningCommons();
 // Functions to be used in our paths
 int getUserIntInput(int min, int max);
 void pathMenu();
-void pathControl(ArchivesPathNodes main[4], ArchivesPathNodes side[8]);
-void pathLeft(int, ArchivesPathNodes side[8]);
+void pathControl(ArchivesPathNodes main[4], ArchivesPathNodes left[4], ArchivesPathNodes right[4]);
+void pathLeft(int, ArchivesPathNodes left[4]);
 void pathCenter(int, ArchivesPathNodes main[4]);
-void pathRight(int, ArchivesPathNodes side[8]);
+void pathRight(int, ArchivesPathNodes right[4]);
 void playMiniGame(ArchivesPathNodes);
+void playgame1();
+void playgame2();
+void playgame3();
+void playgame4();
+void playgame5();
+void playgame6();
 int playPendulumGame(); // when player interacts with pendulum run a timing game
 void labCreature(); // creates an image if player goes to the computer lab
 
@@ -72,7 +79,7 @@ int main()
         default:{
             // set this to the exit code in case the user enters a random input that way it terminates the code:
             cout << "You have entered a value outside of 1-3.\n"
-                << "Please enter a new destination using numbers 1-3.\n";
+                << "Please enter a new destination using number 1-3.\n";
         }
         }
     }
@@ -83,25 +90,28 @@ void pathToArchives() {
     
 
     ArchivesPathNodes main_path[4] = {
-        ArchivesPathNodes("Long hallway", "Just pased the main desk leading to a large open area.", ((rand() % 6) + 1), false),
-        ArchivesPathNodes("Open Area in the Middle", "A large open area in the middle of the library with windows to your left and students sitting at desks.", ((rand() % 6) + 1), false),
-        ArchivesPathNodes("Pendulum Stairs", "A staircase that leads to the second and third floors.", ((rand() % 6) + 1), false),
-        ArchivesPathNodes("Archives and Special Collections", "The archives and special collections area of the library you are looking for.", ((rand() % 6) + 1), true),
+   
+        ArchivesPathNodes("Long hallway", "Just pased the main desk leading to a large open area.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Open Area in the Middle", "A large open area in the middle of the library with windows to your left and students sitting at desks.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Pendulum Stairs", "A staircase that leads to the second and third floors.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Archives and Special Collections", "The archives and special collections area of the library you are looking for.", ((rand() % 6) + 1)),
     };
-    ArchivesPathNodes side_paths[8] = {
-        ArchivesPathNodes("Book Drop", "An area that looks like a spot to return any books you checked out.", ((rand() % 6) + 1), false),                             // 0 left
-        ArchivesPathNodes("Main Desk", "An area to get help from staff members.", ((rand() % 6) + 1), false),                                                         // 1 right
-        ArchivesPathNodes("ARLIS Entrance", "An area called Alaska Resources Library and Information Services.", ((rand() % 6) + 1), false),                          // 2 left
-        ArchivesPathNodes("Study Space", "An area with a lot of desks for students to use for studying.", ((rand() % 6) + 1), false),                                 // 3 right
-        ArchivesPathNodes("Walkway to Testing Center", "A walkway on the second floor that leads to the testing center.", ((rand() % 6) + 1), false),                 // 4 left
-        ArchivesPathNodes("Alaska Medical Library", "An area of the library to find medical information documents.", ((rand() % 6) + 1), false),                      // 5 right
-        ArchivesPathNodes("Instruction and Research", "An area called The instruction and research department of the library.", ((rand() % 6) + 1), false),           // 6 left
-        ArchivesPathNodes("Dean's Office", "The office of the Dean of the Library.", ((rand() % 6) + 1), false),                                                      // 7 right
+    ArchivesPathNodes left_path[4] = {
+        ArchivesPathNodes("Book Drop", "An area that looks like a spot to return any books you checked out.", ((rand() % 6) + 1)),                             
+        ArchivesPathNodes("ARLIS Entrance", "An area called Alaska Resources Library and Information Services.", ((rand() % 6) + 1)),                          
+        ArchivesPathNodes("Walkway to Testing Center", "A walkway on the second floor that leads to the testing center.", ((rand() % 6) + 1)),                 
+        ArchivesPathNodes("Instruction and Research", "An area called The instruction and research department of the library.", ((rand() % 6) + 1)),                                                              
     };
-    
+    ArchivesPathNodes right_path[4] = {
+        ArchivesPathNodes("Main Desk", "An area to get help from staff members.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Study Space", "An area with a lot of desks for students to use for studying.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Alaska Medical Library", "An area of the library to find medical information documents.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Dean's Office", "The office of the Dean of the Library.", ((rand() % 6) + 1)),
+    };
 
     cout << "You Selected the Archives and Special Collections path." << endl;
-    pathControl(main_path, side_paths);
+    cout << "Starting from the main entrance to the library." << endl;
+    pathControl(main_path, left_path,right_path);
     
     
 }
@@ -111,6 +121,7 @@ void pathToLearningCommons() {
         << "1. Go beyond the front desk\n"
         << "2. Investigate the vending machine\n"
         << "3. Search the area for a cookie\n";
+
     int userChoiceStop1 = 0, reactionToDog = 0, userChoiceStop2 = 0, userChoiceStop3 = 0, userTool = 0, numCookies = 0;
     string dogLocation = "noWhere";
     cin >> userChoiceStop1;
@@ -151,6 +162,7 @@ void pathToLearningCommons() {
     }
 
     if (userChoiceStop1 == 2) { // set userTool to one of the numbers selected by the player
+
         cout << "You walk up to the vending machine just beyond the entrance.\n"
             << "Inside you see many possible tools for the journey.\n"
             << "Select which item you would like to gain:\n"
@@ -258,6 +270,7 @@ void labCreature() {
         << "     {{ { { { { { { { { { { ( '_')\n"
         << "      >>>>>>>>>>>>>>>>>>>>>>>`--'>\n";
     return;
+
 }
 
 int getUserIntInput(int min, int max) {
@@ -288,13 +301,14 @@ void pathMenu() {
          << "3: Right" << endl;
 }
 
-void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes sidepaths[8]) {
+
     // Main control function for Archives path.
     // Takes in 2 arrays of ArchivesPathNodes data types, mainpath is set to 4 and sidepaths set to 8.
     // Has 4 int variables 1 for user menu selection input, and 3 to control what element in the above arrays to access depending on user choice between left, forward or, right.
     
     int user_choice = 0;
-    int left_path = 0, center_path = 0 , right_path=1;
+
+    int left_path = 0, center_path = 0 , right_path=0;
     while (center_path < 4)
     {
         pathMenu();
@@ -302,8 +316,9 @@ void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes sidepaths[8]) {
         switch (user_choice)
         {
         case 1: {
-            pathLeft(left_path, sidepaths);
-            cout << "Now you go to " << mainpath[center_path].location << endl;
+
+            pathLeft(left_path, left);
+            cout << "After finishing the game you go back and take the center path.\nNow you go to " << mainpath[center_path].location << endl;
             break;
         }
         case 2: {
@@ -311,26 +326,27 @@ void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes sidepaths[8]) {
             break;
         }
         case 3: {
-            pathRight(right_path, sidepaths);
-            cout << "Now you go to " << mainpath[center_path].location << endl;
+            pathRight(right_path, right);
+            cout << "After finishing the game you go back and take the center path.\nNow you go to " << mainpath[center_path].location << endl;
             break;
         }
         default:
             cout << "Error in pathControl function" << endl;
             break;
         }
-        left_path = left_path + 2; // updates by 2 so all even elements are for left path 
+        left_path++;;  
         center_path++;
-        right_path = right_path + 2; // updates by 2 so all odd elements are for right path 
+        right_path++;  
     }
-    cout << "Great job in reaching the end of the path." << endl;
+    cout << "Great job in reaching the end of the path." << endl
+        << "Hopefully you find what you are looking for." << endl;
 }
 
-void pathLeft(int round,ArchivesPathNodes sidepaths[8]) {
+void pathLeft(int round,ArchivesPathNodes left[4]) {
     // Used when user selects left from pathMenu() function. Takes in 2 arguments int for what round ie element to select in the ArchivesPathNodes array.
     // Will send the current rounds ArchivesPathNodes element to the playMiniGame Function to start the minigame for this node.
     // Outputs the location and discription string for the current node on this path. 
-    ArchivesPathNodes current_node = sidepaths[round];
+    ArchivesPathNodes current_node = left[round];
     
     cout << "You are at " << current_node.location << endl 
          << current_node.description << endl;
@@ -350,11 +366,11 @@ void pathCenter(int round, ArchivesPathNodes mainpath[4]) {
     playMiniGame(current_node);
 }
 
-void pathRight(int round, ArchivesPathNodes sidepaths[8]) {
+void pathRight(int round, ArchivesPathNodes right[4]) {
     // Used when user selects right from pathMenu() function. Takes in 2 arguments int for what round ie element to select in the ArchivesPathNodes array.
     // Will send the current rounds ArchivesPathNodes element to the playMiniGame Function to start the minigame for this node.
     // Outputs the location and discription string for the current node on this path.
-    ArchivesPathNodes current_node = sidepaths[round];
+    ArchivesPathNodes current_node = right[round];
 
     cout << "You are at " << current_node.location << endl
          << current_node.description << endl;
@@ -369,26 +385,26 @@ void playMiniGame(ArchivesPathNodes path) {
     switch (game)
     {
     case 1: {
-        cout << "Play minigame: " << game << endl;
+        playgame1();
         break;
     }case 2: {
-        cout << "Play minigame: " << game << endl;
+        playgame2();
         break;
     }
     case 3: {
-        cout << "Play minigame: " << game << endl;
+        playgame3();
         break;
     }
     case 4: {
-        cout << "Play minigame: " << game << endl;
+        playgame4();
         break;
     }
     case 5: {
-        cout << "Play minigame: " << game << endl;
+        playgame5();
         break;
     }
     case 6: {
-        cout << "Play minigame: " << game << endl;
+        playgame6();
         break;
     }
     default: {
@@ -399,44 +415,141 @@ void playMiniGame(ArchivesPathNodes path) {
 
 }
 
-int playPendulumGame() {
-    srand(time(0)); // seed random number generator
-
-    bool gameOver = false;
-
-
-    while (!gameOver) {
-        int timeToPress = rand() % 3 + 1; // generate a random time to press the key (1-3 seconds)
-        cout << "Get ready to press a key...\n";
-        this_thread::sleep_for(chrono::seconds(timeToPress)); // wait for the random time
-        cout << "PRESS A KEY NOW!\n";
-        fflush(stdout); // make sure the output is displayed immediately
-        auto start = chrono::high_resolution_clock::now(); // start timer
-        _getch(); // wait for a key press
-        fflush(stdin); // clear the input buffer
-        auto end = chrono::high_resolution_clock::now(); // stop timer
-        chrono::duration<double> diff = end - start; // calculate time difference
-        if (diff.count() < 0.5) {
-            cout << "Too quick! You pressed the key in " << diff.count() << " seconds.\n";
-        }
-        else if (diff.count() > 1.5) {
-            cout << "Too late! You pressed the key in " << diff.count() << " seconds.\n";
+void playgame1() {
+    int numberToGuess = (rand() % 10) + 1; // Random number between 1 and 10
+    int attempts = 3;
+    int playerGuess;
+    cout << "Guess the number (between 1 and 10): " << endl;
+    while (attempts > 0) {
+        cin >> playerGuess;
+        if (playerGuess == numberToGuess) {
+            cout << "Correct! You win the guessing game." << endl;
+            return;
         }
         else {
-            cout << "Perfect! You pressed the key in " << diff.count() << " seconds.\n";
-            cout << "The pendulum begins to swing as normal. There is a plaque nearby\nif you would like to learn more about the functionality of this pendulum.\n";
-            gameOver = true;
-        }
-        if (!gameOver) {
-            cout << "Press any key to play again...\n";
-            _getch(); // wait for a key press
-            fflush(stdin); // clear the input buffer
+            cout << "Incorrect. Try again." << endl;
+            --attempts;
         }
     }
+    cout << "Out of attempts. The correct number was " << numberToGuess << "." << endl;
+}
+void playgame2() {
+    struct ScrambleWord {
+        string scrambled;
+        string original;
+    };
+    vector<ScrambleWord> words = {
+        {"rbaoYlri", "Library"},
+        {"Boosk", "Books"},
+        {"gniaerdiR", "Reading"},
+        {"rbeannThw", "New Branch"}
+    };
+    int randomIndex = rand() % words.size();
+    ScrambleWord selectedWord = words[randomIndex];
+    cout << "Unscramble the word: " << selectedWord.scrambled << endl;
+    string playerAnswer;
+    cin.ignore(); // Ignore any leftover newline characters in the input buffer
+    getline(cin, playerAnswer);
+    if (playerAnswer == selectedWord.original) {
+        cout << "Correct! You unscrambled the word." << endl;
+    }
+    else {
+        cout << "Incorrect. The word was: " << selectedWord.original << endl;
+    }
+}
+void playgame3() {
+    int num1 = rand() % 10 + 1;
+    int num2 = rand() % 10 + 1;
+    int correctAnswer = num1 * num2;
+    int playerAnswer;
 
     cout << "Congratulations, you won a cookie! Press any key to continue...\n";
     _getch(); // wait for a key press
     fflush(stdin); // clear the input buffer
 
-    return 0;
+
+    if (playerAnswer == correctAnswer) {
+        cout << "Correct! You solved the math problem." << endl;
+    }
+    else {
+        cout << "Incorrect. The correct answer was: " << correctAnswer << endl;
+    }
+}
+
+void playgame4() {
+    string grid[5] = {
+        "ABCDE",
+        "FGHIL",
+        "MNOPQ",
+        "RSTUV",
+        "WXYZA"
+    };
+    string hiddenWord = "HILO";
+
+    cout << "Find the hidden word in the grid:" << endl;
+    for (int i = 0; i < 5; ++i) {
+        cout << grid[i] << endl;
+    }
+
+    cout << "Enter the hidden word: ";
+    string playerAnswer;
+    cin >> playerAnswer;
+
+    if (playerAnswer == hiddenWord) {
+        cout << "Correct! You found the hidden word." << endl;
+    }
+    else {
+        cout << "Incorrect. The hidden word was: " << hiddenWord << endl;
+    }
+}
+void playgame5() {
+    string word = "ARCHIVES";
+    string guessedWord(word.length(), '_');
+    int attempts = 6;
+    char guess;
+    bool correctGuess;
+
+    cout << "Welcome to Hangman!" << endl;
+
+    while (attempts > 0 && guessedWord != word) {
+        correctGuess = false;
+        cout << "Current word: " << guessedWord << endl;
+        cout << "Attempts remaining: " << attempts << endl;
+        cout << "Enter your guess: ";
+        cin >> guess;
+        guess = toupper(guess);
+
+        for (size_t i = 0; i < word.length(); ++i) {
+            if (word[i] == guess) {
+                guessedWord[i] = guess;
+                correctGuess = true;
+            }
+        }
+        if (!correctGuess) {
+            --attempts;
+        }
+    }
+    if (guessedWord == word) {
+        cout << "Congratulations! You guessed the word: " << word << endl;
+    }
+    else {
+        cout << "Out of attempts! The word was: " << word << endl;
+    }
+}
+void playgame6() {
+    string scrambledWord = "NIARG";
+    string correctWord = "GRAIN";
+
+    cout << "Solve the anagram: " << scrambledWord << endl;
+
+    string playerAnswer;
+    cout << "Enter the correct word: ";
+    cin >> playerAnswer;
+
+    if (playerAnswer == correctWord) {
+        cout << "Correct! You solved the anagram." << endl;
+    }
+    else {
+        cout << "Incorrect. The correct word was: " << correctWord << endl;
+    }
 }
