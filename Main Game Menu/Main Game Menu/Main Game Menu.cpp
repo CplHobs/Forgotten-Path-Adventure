@@ -29,6 +29,7 @@ struct ArchivesPathNodes
 // here is where we declare our functions for the paths: 
 void pathToArchives();
 void pathToLearningCommons();
+void pathToLearningCommons();
 
 // Functions to be used in our paths
 int getUserIntInput(int min, int max);
@@ -58,7 +59,7 @@ int main()
 
     cout << "MENU:" << endl
         << "1: Archives and Special Collections" << endl
-        << "2: Natural Science Building" << endl
+        << "2: Psychology Department" << endl
         << "3: Learning Commons" << endl;
     // For getting the user input to select what option in the game menu to select
     cin >> user_choice;
@@ -71,6 +72,7 @@ int main()
             break;
         case 2:
             // call function for path to Science Building
+            pathToPsychology();
             break;
         case 3:
             // call function for path to Learning Commons
@@ -114,6 +116,111 @@ void pathToArchives() {
     pathControl(main_path, left_path,right_path);
     
     
+}
+string chooseDirection()
+{
+    cout << "Which direction would you like to go? (left/right/forward): ";
+    string userChoice;
+    cin >> userChoice;
+    return userChoice;
+}
+void pathToPsychology()
+{
+    string locations[] = {
+        "You are at the Library's main entrance",
+        "You are at the Alumni Center",
+        "You are at the Kaladi Brothers Cafe.",
+        "You are in the restroom. \n(Remember to wash your hands!)",
+        "You are on the stairs. \n(Watch your step!)",
+        "You are by the Lecture Hall. \n(Shh!)",
+        "You are at the Parking Garage",
+        "You hit a wall. \n(Ouch!)",
+        "You stubbed your toe on a chair. \n(Ouch!)",
+        "You are in the Computer Lab",
+        "You are looking at the vending machines. \n(Grab a snack!)"
+    };
+    int currentLocation = 0;
+    int moves = 0;
+    while (currentLocation != 11)
+    {
+        cout << locations[currentLocation] << "\n";
+        string chosenDirection = chooseDirection();
+        if (currentLocation == 1)
+        {
+            cout << "\n***What would you like to do here?***\n";
+            cout << "resume" << endl;
+            cout << "wolfcard" << endl;
+            cout << "podcast" << endl;
+            string answer;
+            cin >> answer;
+            cout << "Great! Thanks for stopping by!\n" << endl;
+        }
+        else if (currentLocation == 2)
+        {
+            cout << "\n***Which drink would you like to get?***\n";
+            cout << "frapuccino" << endl;
+            cout << "latte" << endl;
+            cout << "juice" << endl;
+            string answer;
+            cin >> answer;
+            cout << "Good choice, enjoy!\n" << endl;
+        }
+        else if (currentLocation == 9)
+        {
+            cout << "\n***There seems to be a study session here. What class are you needing assistance with?***\n";
+            cout << "Computer Hardware" << endl;
+            cout << "Calculus" << endl;
+            cout << "None" << endl;
+            string answer;
+            cin >> answer;
+            cout << "It's here whenever you need it. Stop by anytime!\n" << endl;
+        }
+        else if (currentLocation == 10)
+        {
+            cout << "\n***Which snack would you like to get?***\n";
+            cout << "chips" << endl;
+            cout << "cookies" << endl;
+            cout << "candy" << endl;
+            string answer;
+            cin >> answer;
+            cout << "Good choice, enjoy!\n" << endl;
+        }
+        if (chosenDirection == "left")
+        {
+            currentLocation = (currentLocation + 5) % 12;
+        }
+        else if (chosenDirection == "right")
+        {
+            currentLocation = (currentLocation + 1) % 12;
+        }
+        else if (chosenDirection == "forward")
+        {
+            currentLocation = (currentLocation + 2) % 12;
+        }
+        else
+        {
+            cout << "Invalid direction. Try again.\n";
+        }
+        if (moves >= 7 && currentLocation != 11)
+        {
+            cout << "Uh-oh, you are lost! Would you like to try again? (yes/no): ";
+            string tryAgain;
+            cin >> tryAgain;
+            if (tryAgain == "no")
+            {
+                break;
+            }
+            else
+            {
+                moves = 0;
+                currentLocation = 0;
+            }
+        }
+    }
+    if (currentLocation == 11)
+    {
+        cout << "You've arrived at the Psychology Department. Well done!\n";
+    }
 }
 void pathToLearningCommons() {
     cout << "You will need to go right moving beyond the front desk.\n"
