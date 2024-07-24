@@ -74,22 +74,22 @@ void pathToArchives() {
     
 
     ArchivesPathNodes main_path[4] = {
-        ArchivesPathNodes("Long hallway", "Just pased the main desk leading to a large open area.", ((rand() % 6) + 1), false),
-        ArchivesPathNodes("Open Area in the Middle", "A large open area in the middle of the library with windows to your left and students sitting at desks.", ((rand() % 6) + 1), false),
-        ArchivesPathNodes("Pendulum Stairs", "A staircase that leads to the second and third floors.", ((rand() % 6) + 1), false),
-        ArchivesPathNodes("Archives and Special Collections", "The archives and special collections area of the library you are looking for.", ((rand() % 6) + 1), true),
+        ArchivesPathNodes("Long hallway", "Just pased the main desk leading to a large open area.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Open Area in the Middle", "A large open area in the middle of the library with windows to your left and students sitting at desks.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Pendulum Stairs", "A staircase that leads to the second and third floors.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Archives and Special Collections", "The archives and special collections area of the library you are looking for.", ((rand() % 6) + 1)),
     };
     ArchivesPathNodes left_path[4] = {
-        ArchivesPathNodes("Book Drop", "An area that looks like a spot to return any books you checked out.", ((rand() % 6) + 1), false),                             
-        ArchivesPathNodes("ARLIS Entrance", "An area called Alaska Resources Library and Information Services.", ((rand() % 6) + 1), false),                          
-        ArchivesPathNodes("Walkway to Testing Center", "A walkway on the second floor that leads to the testing center.", ((rand() % 6) + 1), false),                 
-        ArchivesPathNodes("Instruction and Research", "An area called The instruction and research department of the library.", ((rand() % 6) + 1), false),                                                              
+        ArchivesPathNodes("Book Drop", "An area that looks like a spot to return any books you checked out.", ((rand() % 6) + 1)),                             
+        ArchivesPathNodes("ARLIS Entrance", "An area called Alaska Resources Library and Information Services.", ((rand() % 6) + 1)),                          
+        ArchivesPathNodes("Walkway to Testing Center", "A walkway on the second floor that leads to the testing center.", ((rand() % 6) + 1)),                 
+        ArchivesPathNodes("Instruction and Research", "An area called The instruction and research department of the library.", ((rand() % 6) + 1)),                                                              
     };
     ArchivesPathNodes right_path[4] = {
-        ArchivesPathNodes("Main Desk", "An area to get help from staff members.", ((rand() % 6) + 1), false),
-        ArchivesPathNodes("Study Space", "An area with a lot of desks for students to use for studying.", ((rand() % 6) + 1), false),
-        ArchivesPathNodes("Alaska Medical Library", "An area of the library to find medical information documents.", ((rand() % 6) + 1), false),
-        ArchivesPathNodes("Dean's Office", "The office of the Dean of the Library.", ((rand() % 6) + 1), false),
+        ArchivesPathNodes("Main Desk", "An area to get help from staff members.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Study Space", "An area with a lot of desks for students to use for studying.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Alaska Medical Library", "An area of the library to find medical information documents.", ((rand() % 6) + 1)),
+        ArchivesPathNodes("Dean's Office", "The office of the Dean of the Library.", ((rand() % 6) + 1)),
     };
 
     cout << "You Selected the Archives and Special Collections path." << endl;
