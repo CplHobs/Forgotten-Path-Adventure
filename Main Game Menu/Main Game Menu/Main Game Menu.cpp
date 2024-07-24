@@ -28,7 +28,7 @@ struct ArchivesPathNodes
 
 // here is where we declare our functions for the paths: 
 void pathToArchives();
-void pathToLearningCommons();
+void pathToPsychology();
 void pathToLearningCommons();
 
 // Functions to be used in our paths
