@@ -5,6 +5,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
 
 using namespace std;
 
@@ -30,6 +31,12 @@ void pathLeft(int, ArchivesPathNodes left[4]);
 void pathCenter(int, ArchivesPathNodes main[4]);
 void pathRight(int, ArchivesPathNodes right[4]);
 void playMiniGame(ArchivesPathNodes);
+void playgame1();
+void playgame2();
+void playgame3();
+void playgame4();
+void playgame5();
+void playgame6();
 
 int main()
 {
@@ -93,6 +100,7 @@ void pathToArchives() {
     };
 
     cout << "You Selected the Archives and Special Collections path." << endl;
+    cout << "Starting from the main entrance to the library." << endl;
     pathControl(main_path, left_path,right_path);
     
     
@@ -209,7 +217,7 @@ void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes left[4],Archive
         {
         case 1: {
             pathLeft(left_path, left);
-            cout << "Now you go to " << mainpath[center_path].location << endl;
+            cout << "After finishing the game you go back and take the center path.\nNow you go to " << mainpath[center_path].location << endl;
             break;
         }
         case 2: {
@@ -218,7 +226,7 @@ void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes left[4],Archive
         }
         case 3: {
             pathRight(right_path, right);
-            cout << "Now you go to " << mainpath[center_path].location << endl;
+            cout << "After finishing the game you go back and take the center path.\nNow you go to " << mainpath[center_path].location << endl;
             break;
         }
         default:
@@ -229,7 +237,8 @@ void pathControl(ArchivesPathNodes mainpath[4],ArchivesPathNodes left[4],Archive
         center_path++;
         right_path++;  
     }
-    cout << "Great job in reaching the end of the path." << endl;
+    cout << "Great job in reaching the end of the path." << endl
+        << "Hopefully you find what you are looking for." << endl;
 }
 
 void pathLeft(int round,ArchivesPathNodes left[4]) {
@@ -275,26 +284,26 @@ void playMiniGame(ArchivesPathNodes path) {
     switch (game)
     {
     case 1: {
-        cout << "Play minigame: " << game << endl;
+        playgame1();
         break;
     }case 2: {
-        cout << "Play minigame: " << game << endl;
+        playgame2();
         break;
     }
     case 3: {
-        cout << "Play minigame: " << game << endl;
+        playgame3();
         break;
     }
     case 4: {
-        cout << "Play minigame: " << game << endl;
+        playgame4();
         break;
     }
     case 5: {
-        cout << "Play minigame: " << game << endl;
+        playgame5();
         break;
     }
     case 6: {
-        cout << "Play minigame: " << game << endl;
+        playgame6();
         break;
     }
     default: {
@@ -303,4 +312,140 @@ void playMiniGame(ArchivesPathNodes path) {
     }
     }
 
+}
+
+void playgame1() {
+    int numberToGuess = (rand() % 10) + 1; // Random number between 1 and 10
+    int attempts = 3;
+    int playerGuess;
+    cout << "Guess the number (between 1 and 10): " << endl;
+    while (attempts > 0) {
+        cin >> playerGuess;
+        if (playerGuess == numberToGuess) {
+            cout << "Correct! You win the guessing game." << endl;
+            return;
+        }
+        else {
+            cout << "Incorrect. Try again." << endl;
+            --attempts;
+        }
+    }
+    cout << "Out of attempts. The correct number was " << numberToGuess << "." << endl;
+}
+void playgame2() {
+    struct ScrambleWord {
+        string scrambled;
+        string original;
+    };
+    vector<ScrambleWord> words = {
+        {"rbaoYlri", "Library"},
+        {"Boosk", "Books"},
+        {"gniaerdiR", "Reading"},
+        {"rbeannThw", "New Branch"}
+    };
+    int randomIndex = rand() % words.size();
+    ScrambleWord selectedWord = words[randomIndex];
+    cout << "Unscramble the word: " << selectedWord.scrambled << endl;
+    string playerAnswer;
+    cin.ignore(); // Ignore any leftover newline characters in the input buffer
+    getline(cin, playerAnswer);
+    if (playerAnswer == selectedWord.original) {
+        cout << "Correct! You unscrambled the word." << endl;
+    }
+    else {
+        cout << "Incorrect. The word was: " << selectedWord.original << endl;
+    }
+}
+void playgame3() {
+    int num1 = rand() % 10 + 1;
+    int num2 = rand() % 10 + 1;
+    int correctAnswer = num1 * num2;
+    int playerAnswer;
+
+    cout << "Solve the math problem: " << num1 << " * " << num2 << " = ";
+    cin >> playerAnswer;
+
+    if (playerAnswer == correctAnswer) {
+        cout << "Correct! You solved the math problem." << endl;
+    }
+    else {
+        cout << "Incorrect. The correct answer was: " << correctAnswer << endl;
+    }
+}
+void playgame4() {
+    string grid[5] = {
+        "ABCDE",
+        "FGHIL",
+        "MNOPQ",
+        "RSTUV",
+        "WXYZA"
+    };
+    string hiddenWord = "HILO";
+
+    cout << "Find the hidden word in the grid:" << endl;
+    for (int i = 0; i < 5; ++i) {
+        cout << grid[i] << endl;
+    }
+
+    cout << "Enter the hidden word: ";
+    string playerAnswer;
+    cin >> playerAnswer;
+
+    if (playerAnswer == hiddenWord) {
+        cout << "Correct! You found the hidden word." << endl;
+    }
+    else {
+        cout << "Incorrect. The hidden word was: " << hiddenWord << endl;
+    }
+}
+void playgame5() {
+    string word = "ARCHIVES";
+    string guessedWord(word.length(), '_');
+    int attempts = 6;
+    char guess;
+    bool correctGuess;
+
+    cout << "Welcome to Hangman!" << endl;
+
+    while (attempts > 0 && guessedWord != word) {
+        correctGuess = false;
+        cout << "Current word: " << guessedWord << endl;
+        cout << "Attempts remaining: " << attempts << endl;
+        cout << "Enter your guess: ";
+        cin >> guess;
+        guess = toupper(guess);
+
+        for (size_t i = 0; i < word.length(); ++i) {
+            if (word[i] == guess) {
+                guessedWord[i] = guess;
+                correctGuess = true;
+            }
+        }
+        if (!correctGuess) {
+            --attempts;
+        }
+    }
+    if (guessedWord == word) {
+        cout << "Congratulations! You guessed the word: " << word << endl;
+    }
+    else {
+        cout << "Out of attempts! The word was: " << word << endl;
+    }
+}
+void playgame6() {
+    string scrambledWord = "NIARG";
+    string correctWord = "GRAIN";
+
+    cout << "Solve the anagram: " << scrambledWord << endl;
+
+    string playerAnswer;
+    cout << "Enter the correct word: ";
+    cin >> playerAnswer;
+
+    if (playerAnswer == correctWord) {
+        cout << "Correct! You solved the anagram." << endl;
+    }
+    else {
+        cout << "Incorrect. The correct word was: " << correctWord << endl;
+    }
 }
