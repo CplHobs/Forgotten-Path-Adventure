@@ -313,7 +313,7 @@ void pathToLearningCommons() {
         // add function to play pendulum game
         playPendulumGame();
         numCookies++;
-        cout << " You head back the way you came and make a right at the second information desk.\n";
+        cout << "You head back the way you came and make a right at the second information desk.\n";
         break;
     case 3:
         cout << "You go over to the computer lab. It seems to have many computers available to students.\n"
@@ -673,7 +673,7 @@ int playPendulumGame() {
         }
         else {
             cout << "Perfect! You pressed the key in " << diff.count() << " seconds.\n";
-            cout << "The pendulum resumed its swing as normal. You can look at the plaque next to the stairs for more information on its functionality.\n";
+            cout << "The pendulum resumed its swing as normal. You can look at the plaque next \nto the stairs for more information on its functionality.\n";
             gameOver = true;
         }
         if (!gameOver) {
